@@ -1,0 +1,78 @@
+{% extends 'header.html' %}
+
+
+{% block body %}
+
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=ouob6mw1wppge8jn5153nkocscqr12jf3zupvz4fvhlgav45"></script>
+<script>tinymce.init({width:"90%", height:"38%", selector:'textarea', plugins: "textcolor table", table_appearance_options: false,
+  toolbar: "forecolor backcolor",
+  textcolor_map: [
+  "000000", "Black",
+  "993300", "Burnt orange",
+  "333300", "Dark olive",
+  "003300", "Dark green",
+  "003366", "Dark azure",
+  "000080", "Navy Blue",
+  "333399", "Indigo",
+  "333333", "Very dark gray",
+  "800000", "Maroon",
+  "FF6600", "Orange",
+  "808000", "Olive",
+  "008000", "Green",
+  "008080", "Teal",
+  "0000FF", "Blue",
+  "666699", "Grayish blue",
+  "808080", "Gray",
+  "FF0000", "Red",
+  "FF9900", "Amber",
+  "99CC00", "Yellow green",
+  "339966", "Sea green",
+  "33CCCC", "Turquoise",
+  "3366FF", "Royal blue",
+  "800080", "Purple",
+  "999999", "Medium gray",
+  "FF00FF", "Magenta",
+  "FFCC00", "Gold",
+  "FFFF00", "Yellow",
+  "00FF00", "Lime",
+  "00FFFF", "Aqua",
+  "00CCFF", "Sky blue",
+  "993366", "Red violet",
+  "FFFFFF", "White",
+  "FF99CC", "Pink",
+  "FFCC99", "Peach",
+  "FFFF99", "Light yellow",
+  "CCFFCC", "Pale green",
+  "CCFFFF", "Pale cyan",
+  "99CCFF", "Light sky blue",
+  "CC99FF", "Plum"
+] });</script>
+
+
+<h1 class="text-primary">Welcome Back <span class="text-success">{{ session['username'] }}</span></h1>
+<span class="lead font-weight-bold">Creating A New Blog Post:</span>
+<br>
+<small id="date_time"> </small>
+<script type="text/javascript">window.onload = date_time('date_time');</script>
+
+<form action="/BlogPost/articales/makePost" method="POST" class="mt-4">
+
+    <div class="form-group">
+        <input style="font-size: 22px; width: 50%; height: 4%;" type="text" name="title" placeholder="Title (Heading)" required>
+    </div>
+
+    <div class="form-group">
+            <input style="font-size: 22px; width: 50%; height: 4%;" class="flow-control" type="text" name="SubHeading" placeholder="SubTitle (SubHeading)" required>
+    </div>
+
+    <div class="form-group">
+            <textarea class="form-control" name="blogPost" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <div class="form-group" style="margin-left: 35%;">
+            <button class="btn btn-lg btn-outline-success">Submission</button>
+    </div>
+
+</form>
+
+{% endblock %}

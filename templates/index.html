@@ -1,0 +1,32 @@
+
+{% extends 'header.html' %}
+
+{% block body %}
+    
+    <span class="lead">All The Recent Blogs Listed Below in Ascending Order:</span>
+	<div class="row">
+		<div class="col col-xs-12">
+                        <div class="blog-grids">
+
+                            {% for blog in blogs %}
+                            <div class="grid">
+                                <div class="entry-media">
+                                    <img src="{{ blog[6] }}" alt="">
+                                </div>
+                                <div class="entry-body">
+                                    <span class="cat">{{ blog[2] }} </span>
+                                    <h3><a href="/articales/posted/{{ blog[0] }}">{{ blog[3] }}</a></h3>
+                                    
+                                    <p> {{ blog[4] | safe | truncate(150) }} <a style="font-size: 14px; font-weight: bold;" href="/articales/posted/{{ blog[0] }}">Read More..</a></p>
+                                    <div class="read-more-date">
+                                        
+                                        <span class="date" style="font-size: 14px;">Posted: {{ blog[5] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+	</div>
+{% endblock %}

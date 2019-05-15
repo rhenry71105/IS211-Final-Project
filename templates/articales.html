@@ -1,0 +1,103 @@
+
+{% extends 'header.html' %}
+
+{% block body %}
+
+<a href="/"><button class="btn btn-outline-danger">Go Back To Home?</button></a>
+<div class="row">
+
+<!-- Post Content Column -->
+<div class="col-lg-8">
+    <h2 class="section-header">
+
+        <!-- Title -->
+        <span>{{ data[2] }}</span>
+
+        <!-- Sub Heading -->
+        <small>{{ data[3] }}</small>
+      </h2>
+    
+    <!-- Author -->
+    <p class="lead">
+    Written by
+    <a href="#">{{ data[1] }}</a>
+    </p>
+
+    <hr>
+
+    <!-- Date/Time -->
+    <p>Posted on {{ data[5] }}</p>
+
+    <hr>
+
+    <!-- Preview Image -->
+    <img class="img-fluid rounded" src="{{ data[6] }}" alt="">
+
+              <hr>
+    
+              <!-- Post Content -->
+              {{ data[4] | safe }}
+
+    
+              <hr>
+    
+              <!-- Comments Form -->
+              <div class="card my-4">
+                <h5 class="card-header">Leave a Comment:</h5>
+                <div class="card-body">
+                  <form action="/Authorized/Member/Make/Comment/Articale" method="POST">
+                    <div class="form-group">
+                      <input type="hidden" name="articaleID" value="{{ data[0] }}">
+                      
+                      <textarea name="commentText" class="form-control" rows="3" minlength="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+    
+              <!-- Single Comment -->
+              {% if commentsText|length < 1 %}
+              <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="{{ url_for('static', filename='img/profileICON.gif') }}" height="200px" width="200px" alt="">
+                <div class="media-body text-danger">
+                  <h5 class="mt-0 text-primary">Opss</h5>
+                  No Comments Have Been Made On This Article Yet.
+                  <footer class="blockquote-footer" id="currentDateTime"></footer>
+                </div>
+              </div>
+              <script>
+                  var displayMessage = "You Are Viewing This Message At: ";
+                  console.log(displayMessage + new Date().toLocaleString());
+                  document.getElementById("currentDateTime").innerHTML = displayMessage + new Date().toLocaleString();
+              </script>
+              
+              {% endif %}
+              
+              {% for comment in commentsText %}               
+              <div class="media mb-4">
+                <!--<img class="pb-2 d-flex mr-3 rounded-circle" src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fi.gifer.com%2F7PUr.gif&amp;f=1" height="120px" width="120px">-->
+                <img class="pb-2 d-flex mr-3 rounded-circle" src="{{ url_for('static', filename='img/profileICON.gif') }}" height="120px" width="120px">
+                <div class="media-body">
+                  <h5 class="mt-0">{{ comment[0] }}</h5>
+                  {{ comment[1] }}
+                  <footer class="blockquote-footer">Posted On: {{ comment[2] }}</footer>
+                </div>
+              </div>
+           
+              {% endfor %}
+              
+              
+    
+          </div>
+          <!-- /.row -->
+    
+        </div>
+        <!-- /.container -->
+    
+
+   
+      
+    
+    
+{% endblock %}

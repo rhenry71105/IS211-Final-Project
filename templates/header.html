@@ -1,0 +1,115 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='js/currentDateTime.js') }}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<header class="header py-2 bg-dark">
+    <div class="container">
+        <h1 class="m-0 text-center text-white">Welcome To RHenry Blogs</h1>
+    </div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div style="position: absolute; right: 20px;" class="collapse navbar-collapse" id="navbarsExample03">
+                    {% if session["username"] %}
+
+                    {% if session["username"] == "rhenry" %}
+                    
+                    <ul class="navbar-nav mr-auto">
+                        <a href="/" class=" text-white">
+                            <li class="nav-item mr-5 btn-outline-primary text-white">
+                                Welcome Back, {{ session["username"] }}!
+                            </li>
+                        </a>
+                        <a href="/articles/Posting-New-Articale/">
+                            <li class="nav-item mr-5 btn-outline-primary text-white"> 
+                                Create A New Blog
+                            </li>
+                        </a>
+                        <a class="btn-outline-primary text-white" href="/logout">                            
+                            <li class="nav-item">
+                                Logout?
+                            </li>
+                        </a>
+                    </ul>
+                    {% elif session["username"] != "rhenry" %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mr-5 btn-outline-primary text-white">
+                            <a href="/" class="text-white">
+                            Welcome Back, {{ session["username"] }}!
+                        </a></li>
+                        <li class="nav-item btn-outline-primary">
+                                <a class="btn-outline-primary text-white" href="/logout">
+                            Logout?
+                        </a></li>
+                    </ul>
+                    {% endif %}
+                    {% else %}
+                <ul class="navbar-nav mr-auto">
+                      <li class="nav-item btn-outline-primary text-white">
+                        <a class="nav-link btn-outline-primary text-white" data-toggle="modal" data-target="#loginModal">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link btn-outline-primary text-white" data-toggle="modal" data-target="#signupModal">Signup</a>
+                      </li>
+                    </ul>
+                        {% endif %}
+            </div>
+    </nav>
+</header>
+
+<!-- Check For User Login Status? -->
+{% if not session %}
+    {% include 'loginCheck.html' %}
+    <!-- <script>$('#loginModal').modal('show');</script> -->
+    <!-- Manual Toggle Button: <button type="button" class="btn btn-outline-primary text-white" data-toggle="modal" data-target="#loginModal">Toggle Modal</button> -->
+    <!-- <script>$('#signupModal').modal('show');</script> -->
+    {{ memberCheck | safe }}
+{% elif get_flashed_messages(with_categories=true) %}
+{% include 'loginCheck.html' %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+
+    {% for category, message in messages %}
+    <div class="container mt-5">
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    </div>
+    {% endfor %}
+
+  {% endif %}
+  
+{% endwith %}
+
+
+
+{% endif %}
+
+
+<!-- You Can Use This block content to Add Stuff outside of container class over jinja if needed. -->
+{% block content %}{% endblock %}
+
+<div class="container mt-5">
+
+
+    {% block body %} {% endblock %}
+
+</div>
+
+
+
+
+<!-- Footer -->
+{% if request.path != "/" %}
+<footer class="py-5 bg-dark" id="footer">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright © RHenry 2018</p>
+        </div>
+        <!-- /.container -->
+        </footer>
+{% endif %}
